@@ -3,21 +3,21 @@
     <div class="container">
 	<div class="row">
 	    <div class="col-lg-12 text-center">
-		<h2 class="section-heading">Peer Reviewed Publications</h2>
+		<h2 class="section-heading"> Publications</h2>
 		<h3 class="section-subheading text-muted"> </h3>
 	    </div>
 	</div>
 
-  <p style="line-height:200%;">&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight:bolder;"> Published </span> </p>
+  <p style="line-height:200%;">&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight:bolder;"> Accepted/published after Peer Reviewed </span> </p>
 
   <p style="line-height:130%;">&nbsp;&nbsp;&nbsp;&nbsp;14. Chao Y, <span style="font-weight:bolder;"> Lei Li </span>, Girodat D, Förstner KU, Said N, Corcoran C, Smiga M, Papenfort K, Reinhardt R, Wieden HJ, Luisi BF, Vogel J.
-  In vivo cleavage map illuminates the central role of RNase E in coding and noncoding RNA pathways. <b> <i> Molecular Cell. </i> </b> (in press) </a>
+  In vivo cleavage map illuminates the central role of RNase E in coding and noncoding RNA pathways. 2016 <b> <i> Molecular Cell. </i> </b> (in press) </a>
 
   <p style="line-height:130%;">&nbsp;&nbsp;&nbsp;&nbsp;13. Saliba AE, <span style="font-weight:bolder;"> Lei Li </span>, Westermann AJ, Appenzeller S, Stapels DAC, Schulte LN, Helaine S, Vogel J.
-    Single cell RNA-seq ties macrophage polarization to growth rate of intracellular Salmonella .<i> Nature Microbiology. </i> (in press) </a>
+    Single cell RNA-seq ties macrophage polarization to growth rate of intracellular Salmonella. 2016 <b> <i> Nature Microbiology. </i> </b> (in press) </a>
   </p>
 
-  <p style="line-height:130%;">&nbsp;&nbsp;&nbsp;&nbsp;12. Erik Holmqvist, Patrick Wright, <span style="font-weight:bolder;"> Lei Li </span>, Thorsten Bischler, Lars Barquist, Richard Reinhardt, Rolf Backofen, Jörg Vogel. Global RNA recognition patterns of post-transcriptional regulators Hfq and CsrA revealed by UV crosslinking in vivo. <i> The EMBO Journal. </i> 2016. embj.201593360.
+  <p style="line-height:130%;">&nbsp;&nbsp;&nbsp;&nbsp;12. Holmqvist E, Wright PR, <span style="font-weight:bolder;"> Lei Li </span>, Bischler T, Barquist L, Reinhardt R, Backofen R, Vogel J. Global RNA recognition patterns of post-transcriptional regulators Hfq and CsrA revealed by UV crosslinking in vivo. <b> <i> The EMBO Journal. </i> </b> 2016. embj.201593360.
   <a href="http://emboj.embopress.org/content/early/2016/04/04/embj.201593360"> <span style="font-weight:bolder;"> Full text at EMBO Journal </span> </a>
   </p>
 
@@ -65,22 +65,5 @@
   <a href="http://nar.oxfordjournals.org/content/41/D1/D233.long"> <span style="font-weight:bolder;"> Full text at NAR </span> </a>
   </p>
 
-	{% for post in site.posts %}
-	    <div class="col-md-4 col-sm-6 portfolio-item">
-		<a href="#portfolioModal{{ post.modal-id }}" class="portfolio-link" data-toggle="modal">
-		    <div class="portfolio-hover">
-			<div class="portfolio-hover-content">
-			    <i class="fa fa-plus fa-3x"></i>
-			</div>
-		    </div>
-		    <img src="img/portfolio/{{ post.thumbnail }}" class="img-responsive" alt="" align="middle" >
-		</a>
-		<div class="portfolio-caption">
-		    <h4>{{ post.title }}</h4>
-		    <p class="text-muted">{{ post.subtitle }}</p>
-		</div>
-	    </div>
-	{% endfor %}
-	</div>
-    </div>
+</div>
 </section>
