@@ -843,12 +843,12 @@ ul.social-buttons li a:active {
 }
 
 ::-moz-selection {
-    text-shadow: none;
+    /* text-shadow: none; */
     background: #{{ site.color.primary }};
 }
 
 ::selection {
-    text-shadow: none;
+    /* text-shadow: none; */
     background: #{{ site.color.primary }};
 }
 
