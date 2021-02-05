@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>DaPars2: Dynamitic analysis of Alternative PolyAdenylation from RNA-seq Using Multiple Samples &mdash; DaPars2_Documents </title>
+
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.9.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="DaPars2_Documents" href="DaPars2.html" />
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="DaPars2.html">DaPars2_Documents</a> &raquo;</li>
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+
+  <div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="dapars2-dynamitic-analysis-of-alternative-polyadenylation-from-rna-seq-using-multiple-samples">
+<h1>DaPars2: Dynamics analysis of Alternative PolyAdenylation from RNA-seq Using Multiple Samples<a class="headerlink" href="#dapars2-dynamitic-analysis-of-alternative-polyadenylation-from-rna-seq-using-multiple-samples" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The dynamic usage of the 3’untranslated region (3’UTR) resulting from alternative polyadenylation (APA) is emerging as a pervasive mechanism for regulating mRNA diversity, stability and translation.
+Though RNA-seq provides the whole-transcriptome information and a lot of tools for analyzing gene/isoform expression are available, very few tool focus on the analysis of 3&#8217;UTR from standard RNA-seq.
+DaPars2 is the next generation of DaPars that directly infers the dynamic alternative polyadenylation (APA) usage by comparing standard RNA-seq from multiple samples.
+Given the annotated gene model, DaPars2 can infer the de novo proximal APA sites as well as the long and short 3&#8217;UTR expression levels. Finally, the dynamic APA usages of each samples will be identified.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Prerequisite: <a class="reference external" href="http://www.python.org/getit/releases/2.7/">python2.7</a>;  <a class="reference external" href="http://numpy.scipy.org/">numpy</a>; <a class="reference external" href="http://www.scipy.org/">scipy</a>; <a class="reference external" href="http://www.r-project.org/">R</a></p>
+<p>Install DaPars2:</p>
+<div class="highlight-python"><div class="highlight"><pre>tar zxf DaPars2-VERSION.tar.gz
+
+cd DaPars2-VERSION
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-format">
+<h1>Input format<a class="headerlink" href="#input-format" title="Permalink to this headline">¶</a></h1>
+<p>DaPars2 requires the following two file formats as input:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED</a> file is tab separated, 12 column, plain text file to represent gene model. The gene model can be downloaded from <a class="reference external" href="http://genome.ucsc.edu/cgi-bin/hgTables?command=start">UCSC</a>.</li>
+<li><a class="reference external" href="http://genome.ucsc.edu/goldenPath/help/wiggle.html">Wiggle</a> files store the reads alignment results, which can be generated from BAM file from RNA-seq alignment tool such as TopHat or STAR.</li>
+</ul>
+</div>
+<div class="section" id="usage-information">
+<h1>Usage Information<a class="headerlink" href="#usage-information" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="step-1-generate-region-annotation-dapars2-extract-anno-py">
+<h2>Step 1: Generate region annotation: DaPars_Extract_Anno.py<a class="headerlink" href="#step-1-generate-region-annotation-dapars2-extract-anno-py" title="Permalink to this headline">¶</a></h2>
+<p>DaPars2 will use the extracted distal polyadenylation sites to infer the proximal polyadenylation sites based on
+the alignment wiggle files of all samples. The output in this step will be used by step 3.</p>
+<dl class="docutils">
+<dt>Options:</dt>
+<dd><table class="first last docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></td>
+<td>show this help message and exit</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-b <var>GENE_BED_FILE</var></span>, <span class="option">--bed=<var>GENE_BED_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>The gene model in BED format. The BED file can be downloaded from <a class="reference external" href="http://genome.ucsc.edu/cgi-bin/hgTables?command=start">UCSC</a></td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-s <var>Gene_Symbol_FILE</var></span>, <span class="option">--gene_symbol_map=<var>Gene_Symbol_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>The mapping of transcripts to gene symbol.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-o <var>OUTPUT_FILE</var></span>, <span class="option">--out-prefix=<var>OUTPUT_FILE</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>The extracted annotation region will be stored into this file.</td></tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div>
+
+<div class="section" id="step-2-generate-sequencing-depth-file-for-all-samples">
+<h2>Step 2: Generate mapped reads files for all Samples<a class="headerlink" href="#step-2-generate-sequencing-depth-file-for-all-samples" title="Permalink to this headline">¶</a></h2>
+<p>DaPars2 will use number of mapping reads for each samples to normalize library sizes. The output in this step will be used by step 3.</p>
+<p>The format of the mapping reads file is:</p>
+<a class="reference internal image-reference" href="images/Sequencing_depth_file.jpg"><img alt="images/Sequencing_depth_file.jpg" src="images/Sequencing_depth_file.jpg" style="width: 500px; height: 170px;" /></a>
+<p>The first column is the sample name and the second column is the corresponding mapped reads. The order of the samples in the mapped reads file must be the same as the order of wiggles files in step 3.</p>
+</div>
+
+<div class="section" id="step-3-main-function-to-get-final-result-python-dapars2-main-py-configure-file">
+<h2>Step 3: Run DaPars2: Dapars2_Multi_Sample.py <a class="headerlink" href="#step-3-main-function-to-get-final-result-python-dapars2-main-py-configure-file" title="Permalink to this headline">¶</a></h2>
+<p>Dapars2 uses multiple threads and analyzes each chromosome separately to save time and memory.</p>
+<p>Run the following commands to perform DaPar2 analysis:</p>
+<div class="highlight-python"><div class="highlight"><pre> python Dapars2_Multi_Sample.py Dapars2_configure_file current_processing_chrmosome
+</pre></div></div>
+<p>The configure file contains most of the parameters for DaPars2_Multi_Sample.py.</p>
+<p>The format of the configure is:</p>
+<div class="highlight-python"><div class="highlight"><pre>#The following file is the result of step 1.
+
+Annotated_3UTR=hg19_refseq_extracted_3UTR.bed
+
+#A comma-separated list of Wiggle files of all samples
+
+Aligned_Wig_files=wig/STAR_output_SRR1436021_Aligned.sortedByCoord.out.wig,wig/STAR_output_SRR1434228_Aligned.sortedByCoord.out.wig,
+wig/STAR_output_SRR1365013_Aligned.sortedByCoord.out.wig,wig/STAR_output_SRR1360056_Aligned.sortedByCoord.out.wig,
+wig/STAR_output_SRR1308860_Aligned.sortedByCoord.out.wig,wig/STAR_output_SRR1399113_Aligned.sortedByCoord.out.wig,
+wig/STAR_output_SRR1353418_Aligned.sortedByCoord.out.wig,wig/STAR_output_SRR1349809_Aligned.sortedByCoord.out.wig,
+wig/STAR_output_SRR1312002_Aligned.sortedByCoord.out.wig,wig/STAR_output_SRR1310939_Aligned.sortedByCoord.out.wig
+
+Output_directory=DaPars_Test_data/
+
+Output_result_file=DaPars_Test_data
+
+# Specify the Coverage_threshold
+
+Coverage_threshold=10
+
+# Specify the number of threads used to process the data
+
+Num_Threads = 8
+
+# Provide Sequencing_depth file for normalization
+
+sequencing_depth_file=mapping_bam_location_with_depth.txt
+
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-format">
+<h2>Output format<a class="headerlink" href="#output-format" title="Permalink to this headline">¶</a></h2>
+<p>Output format:</p>
+<a class="reference internal image-reference" href="images/Result_example.jpg"><img alt="images/Result_example.jpg" src="images/Result_example.jpg" style="width: 1200px; height: 150px;" /></a>
+</div>
+</div>
+
+<div class="section" id="release-history">
+<h1>Release history<a class="headerlink" href="#release-history" title="Permalink to this headline">¶</a></h1>
+<p>DaPars2</p>
+<ul class="simple">
+<li>DaPars2 is released.</li>
+</ul>
+</div>
+<div class="section" id="contact">
+<h1>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Lei Li: <a class="reference external" href="mailto:lei&#46;li&#37;&#52;&#48;bcm&#46;edu">lei<span>&#46;</span>li<span>&#64;</span>bcm<span>&#46;</span>edu</a></li>
+<li>Wei Li: <a class="reference external" href="mailto:wl1&#37;&#52;&#48;bcm&#46;edu">wl1<span>&#64;</span>bcm<span>&#46;</span>edu</a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="DaPars2.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#dapars2-dynamitic-analysis-of-alternative-polyadenylation-from-rna-seq-using-multiple-samples">DaPars2: Dynamitic analysis of Alternative PolyAdenylation from RNA-seq Using Multiple Samples</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#input-format">Input format</a></li>
+<li><a class="reference internal" href="#usage-information">Usage Information</a><ul>
+<li><a class="reference internal" href="#step-1-generate-region-annotation-dapars2-extract-anno-py">Step 1: Generate region annotation: DaPars2_Extract_Anno.py</a></li>
+<li><a class="reference internal" href="#step-2-generate-sequencing-depth-file-for-all-samples">Step 2: Generate Sequencing Depth file for all Samples</a></li>
+<li><a class="reference internal" href="#step-3-main-function-to-get-final-result-python-dapars2-main-py-configure-file">Step 3: Run DaPars2: DaPars2_Multi_Sample.py</a></li>
+<li><a class="reference internal" href="#output-format">Output format</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-history">Release history</a></li>
+<li><a class="reference internal" href="#contact">Contact</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DaPars2.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="DaPars2.html">DaPars2 Documents</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2019, Lei Li.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+    </div>
+  </body>
+</html>
