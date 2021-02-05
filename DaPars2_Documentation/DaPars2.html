@@ -106,6 +106,10 @@ the alignment wiggle files of all samples. The output in this step will be used 
 </dl>
 </div>
 
+<p>Run the following commands to generate region annotation analysis:</p>
+<div class="highlight-python"><div class="highlight"><pre> python DaPars_Extract_Anno.py -b hg19_refseq_whole_gene.bed -s hg19_4_19_2012_Refseq_id_from_UCSC.txt -o hg19_refseq_extracted_3UTR.bed
+</pre></div></div>
+
 <div class="section" id="step-2-generate-sequencing-depth-file-for-all-samples">
 <h2>Step 2: Generate mapped reads files for all Samples<a class="headerlink" href="#step-2-generate-sequencing-depth-file-for-all-samples" title="Permalink to this headline">¶</a></h2>
 <p>DaPars2 will use number of mapping reads for each samples to normalize library sizes. The output in this step will be used by step 3.</p>
